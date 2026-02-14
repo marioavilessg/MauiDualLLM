@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:MauiApp2.ViewModels"
+             x:Class="MauiApp2.Views.ConfigPage"
+             Title="Configuración"
+             BackgroundColor="#F9F9F9">
+
+    <ContentPage.BindingContext>
+        <vm:ConfigViewModel/>
+    </ContentPage.BindingContext>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="20">
+
+            <!-- HEADER -->
+            <Label Text="System Settings" 
+                   FontSize="24" 
+                   FontAttributes="Bold" 
+                   TextColor="#333333"
+                   Margin="0,10,0,10"/>
+
+            <!-- RABBITMQ CARD -->
+            <Frame Padding="20" CornerRadius="15" HasShadow="False" BackgroundColor="White" BorderColor="Transparent">
+                <Frame.Shadow>
+                    <Shadow Brush="Black" Opacity="0.05" Radius="10" Offset="0,2"/>
+                </Frame.Shadow>
+                
+                <VerticalStackLayout Spacing="15">
+                    <Label Text="RabbitMQ Configuration" 
+                           FontSize="18" 
+                           FontAttributes="Bold" 
+                           TextColor="#333333"/>
+                    
+                    <BoxView HeightRequest="1" Color="#EEEEEE"/>
+
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="Broker Host" FontSize="12" TextColor="#666666" FontAttributes="Bold"/>
+                        <Border Stroke="#E0E0E0" StrokeThickness="1" StrokeShape="RoundRectangle 10" Padding="10,0" HeightRequest="45">
+                            <Entry Text="{Binding BrokerHost}" Placeholder="e.g. 192.168.1.10" TextColor="#333333" BackgroundColor="Transparent"/>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="15">
+                        <VerticalStackLayout Spacing="5" Grid.Column="0">
+                            <Label Text="Queue In" FontSize="12" TextColor="#666666" FontAttributes="Bold"/>
+                            <Border Stroke="#E0E0E0" StrokeThickness="1" StrokeShape="RoundRectangle 10" Padding="10,0" HeightRequest="45">
+                                <Entry Text="{Binding QueueIn}" Placeholder="queue_in" TextColor="#333333" BackgroundColor="Transparent"/>
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Spacing="5" Grid.Column="1">
+                            <Label Text="Queue Out" FontSize="12" TextColor="#666666" FontAttributes="Bold"/>
+                            <Border Stroke="#E0E0E0" StrokeThickness="1" StrokeShape="RoundRectangle 10" Padding="10,0" HeightRequest="45">
+                                <Entry Text="{Binding QueueOut}" Placeholder="queue_out" TextColor="#333333" BackgroundColor="Transparent"/>
+                            </Border>
+                        </VerticalStackLayout>
+                    </Grid>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- LLM CARD -->
+            <Frame Padding="20" CornerRadius="15" HasShadow="False" BackgroundColor="White" BorderColor="Transparent">
+                <Frame.Shadow>
+                    <Shadow Brush="Black" Opacity="0.05" Radius="10" Offset="0,2"/>
+                </Frame.Shadow>
+
+                <VerticalStackLayout Spacing="15">
+                    <Label Text="LLM Configuration" 
+                           FontSize="18" 
+                           FontAttributes="Bold" 
+                           TextColor="#333333"/>
+                    
+                    <BoxView HeightRequest="1" Color="#EEEEEE"/>
+
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="LLM URI" FontSize="12" TextColor="#666666" FontAttributes="Bold"/>
+                        <Border Stroke="#E0E0E0" StrokeThickness="1" StrokeShape="RoundRectangle 10" Padding="10,0" HeightRequest="45">
+                            <Entry Text="{Binding LlmUri}" Placeholder="http://localhost:11434" TextColor="#333333" BackgroundColor="Transparent"/>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="Model Name" FontSize="12" TextColor="#666666" FontAttributes="Bold"/>
+                        <Border Stroke="#E0E0E0" StrokeThickness="1" StrokeShape="RoundRectangle 10" Padding="10,0" HeightRequest="45">
+                            <Entry Text="{Binding Model}" Placeholder="e.g. llama3" TextColor="#333333" BackgroundColor="Transparent"/>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <Grid ColumnDefinitions="*,*,*" ColumnSpacing="10">
+                        <VerticalStackLayout Spacing="5" Grid.Column="0">
+                            <Label Text="Temp" FontSize="12" TextColor="#666666" FontAttributes="Bold"/>
+                            <Border Stroke="#E0E0E0" StrokeThickness="1" StrokeShape="RoundRectangle 10" Padding="10,0" HeightRequest="45">
+                                <Entry Text="{Binding Temperature}" Keyboard="Numeric" TextColor="#333333" BackgroundColor="Transparent"/>
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Spacing="5" Grid.Column="1">
+                            <Label Text="Tokens" FontSize="12" TextColor="#666666" FontAttributes="Bold"/>
+                            <Border Stroke="#E0E0E0" StrokeThickness="1" StrokeShape="RoundRectangle 10" Padding="10,0" HeightRequest="45">
+                                <Entry Text="{Binding MaxTokens}" Keyboard="Numeric" TextColor="#333333" BackgroundColor="Transparent"/>
+                            </Border>
+                        </VerticalStackLayout>
+                        
+                         <VerticalStackLayout Spacing="5" Grid.Column="2">
+                            <Label Text="Turns" FontSize="12" TextColor="#666666" FontAttributes="Bold"/>
+                            <Border Stroke="#E0E0E0" StrokeThickness="1" StrokeShape="RoundRectangle 10" Padding="10,0" HeightRequest="45">
+                                <Entry Text="{Binding MaxTurns}" Keyboard="Numeric" TextColor="#333333" BackgroundColor="Transparent"/>
+                            </Border>
+                        </VerticalStackLayout>
+                    </Grid>
+
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="System Prompt" FontSize="12" TextColor="#666666" FontAttributes="Bold"/>
+                        <Border Stroke="#E0E0E0" StrokeThickness="1" StrokeShape="RoundRectangle 10" Padding="10" HeightRequest="120">
+                            <Editor Text="{Binding SystemPrompt}" AutoSize="TextChanges" TextColor="#333333" BackgroundColor="Transparent"/>
+                        </Border>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </Frame>
+
+            <Button Text="Save Settings"
+                    Command="{Binding SaveCommand}"
+                    BackgroundColor="#333333"
+                    TextColor="White"
+                    FontAttributes="Bold"
+                    FontSize="16"
+                    CornerRadius="25"
+                    HeightRequest="50"
+                    Margin="0,10,0,20">
+                <Button.Shadow>
+                    <Shadow Brush="Black" Opacity="0.1" Radius="10" Offset="0,4"/>
+                </Button.Shadow>
+            </Button>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

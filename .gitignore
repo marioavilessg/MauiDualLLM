@@ -1,0 +1,66 @@
+# =========================
+# .NET / Visual Studio
+# =========================
+
+bin/
+obj/
+.vs/
+*.user
+*.suo
+*.userprefs
+*.cache
+*.log
+
+# Rider
+.idea/
+
+# VS Code
+.vscode/
+
+# =========================
+# MAUI / Xamarin
+# =========================
+
+# Android
+*.apk
+*.ap_
+*.aab
+*.dex
+*.class
+*.so
+
+# iOS / MacCatalyst
+*.ipa
+*.app
+*.dSYM
+*.mobileprovision
+
+# Windows
+*.appx
+*.appxbundle
+*.appxupload
+*.pdb
+
+# Tizen
+*.tpk
+
+# =========================
+# Archivos locales
+# =========================
+
+*.sqlite
+*.db
+*.db-shm
+*.db-wal
+
+# Secrets / configuración local
+appsettings.Development.json
+secrets.json
+
+# Logs
+logs/
+*.log
+
+# OS
+Thumbs.db
+.DS_Store

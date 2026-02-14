@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:MauiApp1.ViewModels"
+             x:Class="MauiApp1.Views.ChatPage">
+
+    <ContentPage.BindingContext>
+        <vm:ChatViewModel/>
+    </ContentPage.BindingContext>
+
+    <Grid RowDefinitions="Auto,*,Auto" Padding="0" BackgroundColor="#F9F9F9">
+
+        <!-- HEADER -->
+        <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" Padding="15,10,30,10" BackgroundColor="White">
+            <Grid.Shadow>
+                <Shadow Brush="Black" Opacity="0.1" Radius="5" Offset="0,2"/>
+            </Grid.Shadow>
+            
+            <Label Grid.Column="1" 
+                   Text="{Binding CurrentLlmName}"
+                   FontSize="18"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   TextColor="#333333"/>
+
+            <Button Grid.Column="2"
+                    Text="⚙"
+                    FontSize="24"
+                    BackgroundColor="Transparent"
+                    TextColor="#666666"
+                    Clicked="OnConfigClicked"
+                    VerticalOptions="Center"
+                    HorizontalOptions="End"
+                    Margin="10,0,0,0"/>
+        </Grid>
+
+        <!-- MESSAGES -->
+        <CollectionView x:Name="MessagesCollection"
+                        Grid.Row="1"
+                        ItemsSource="{Binding Messages}"
+                        SelectionMode="None"
+                        VerticalOptions="FillAndExpand"
+                        Margin="0,10,0,10">
+            
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Padding="15,5">
+                        <VerticalStackLayout Spacing="5">
+                            
+                            <!-- Author & Time Header -->
+                            <HorizontalStackLayout Spacing="5">
+                                <HorizontalStackLayout.Triggers>
+                                    <DataTrigger TargetType="HorizontalStackLayout" Binding="{Binding IsMine}" Value="True">
+                                        <Setter Property="HorizontalOptions" Value="End"/>
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="HorizontalStackLayout" Binding="{Binding IsMine}" Value="False">
+                                        <Setter Property="HorizontalOptions" Value="Start"/>
+                                    </DataTrigger>
+                                </HorizontalStackLayout.Triggers>
+                                
+                                <Label Text="{Binding Author}" 
+                                       FontSize="12" 
+                                       FontAttributes="Bold" 
+                                       TextColor="#555555"/>
+                                <Label Text="•" 
+                                       FontSize="12" 
+                                       TextColor="#999999"/>
+                                <Label Text="{Binding Timestamp, StringFormat='{0:HH:mm}'}" 
+                                       FontSize="12" 
+                                       TextColor="#999999"/>
+                            </HorizontalStackLayout>
+
+                            <!-- Message Bubble -->
+                            <Frame Padding="15,10"
+                                   CornerRadius="15"
+                                   HasShadow="False"
+                                   MaximumWidthRequest="300"
+                                   BorderColor="Transparent">
+                                <Frame.Triggers>
+                                    <DataTrigger TargetType="Frame" Binding="{Binding IsMine}" Value="True">
+                                        <Setter Property="BackgroundColor" Value="#F2F2F2"/>
+                                        <Setter Property="HorizontalOptions" Value="End"/>
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Frame" Binding="{Binding IsMine}" Value="False">
+                                        <Setter Property="BackgroundColor" Value="#FFFFFF"/>
+                                        <Setter Property="HorizontalOptions" Value="Start"/>
+                                        <Setter Property="BorderColor" Value="#EEEEEE"/>
+                                    </DataTrigger>
+                                </Frame.Triggers>
+
+                                <Label Text="{Binding Text}"
+                                       TextColor="#333333"
+                                       LineBreakMode="WordWrap"
+                                       FontSize="15"/>
+                            </Frame>
+
+                        </VerticalStackLayout>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- INPUT -->
+        <Grid Grid.Row="2" ColumnDefinitions="*,Auto" Padding="15,10,15,20" BackgroundColor="White">
+            <Grid.Shadow>
+                <Shadow Brush="Black" Opacity="0.05" Radius="10" Offset="0,-2"/>
+            </Grid.Shadow>
+
+            <Border Grid.Column="0" 
+                    Stroke="#E0E0E0" 
+                    StrokeThickness="1" 
+                    StrokeShape="RoundRectangle 25"
+                    Padding="15,0"
+                    BackgroundColor="#FFFFFF"
+                    HeightRequest="50">
+                <Entry Text="{Binding InputText}"
+                       Placeholder="Send a message..."
+                       PlaceholderColor="#999999"
+                       TextColor="#333333"
+                       VerticalOptions="Center"
+                       BackgroundColor="Transparent"/>
+            </Border>
+
+            <Button Grid.Column="1"
+                    Text="➤"
+                    FontSize="18"
+                    FontAttributes="Bold"
+                    BackgroundColor="#333333"
+                    TextColor="White"
+                    CornerRadius="25"
+                    WidthRequest="50"
+                    HeightRequest="50"
+                    Margin="10,0,0,0"
+                    Command="{Binding SendCommand}"/>
+        </Grid>
+
+    </Grid>
+
+</ContentPage>
